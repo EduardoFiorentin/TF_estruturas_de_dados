@@ -10,8 +10,11 @@
 */
 
 #include <stdio.h> 
+#include <stdlib.h> 
 
 #define EXIT 10  // valor fixo para a opção que finaliza a aplicação
+#define LIMPAR system("cls")
+#define PAUSAR system("pause")
 
 // Struct que representa um item de uma lista de compras armazenada em uma arvore binaria de busca
 struct item {
@@ -26,10 +29,13 @@ typedef struct item Item;
 int menu1()
 {
      int op = 0;
-     printf("\nMenu principal\n");
-     // complete com as demais opcoes...
+     LIMPAR; 
+     printf("Menu principal\n");
+     printf("\t01 - Gerenciar lista A\n");
+     printf("\t02 - Gerenciar lista B\n");
+     printf("\t03 - Itens duplicados\n");
 
-     printf("%d - Sair do programa",EXIT);
+     printf("\t%d - Sair do programa\n",EXIT);
      printf("\nDigite a opcao: ");
      scanf("%d",&op);
      return op;
@@ -38,11 +44,15 @@ int menu1()
 // Apresenta o segundo menu da aplicação e retorna a opção selecionada
 int menu2()
 {
+	LIMPAR; 
     int op = 0;
     printf("Submenu - Gerenciar lista de compras\n");
-    // complete com as demais opcoes...
-
-    printf("%d Retornar para o menu principal",EXIT);
+	printf("\n01- Inserir produto");
+	printf("\n02- Pesquisar produto");
+	printf("\n03- Atualizar produto");
+	printf("\n04- Listar produtos");
+	printf("\n05- Deletar produto");
+    printf("\n%d Retornar para o menu principal",EXIT);
     printf("\nDigite a opcao: ");
     scanf("%d",&op); 
     return op;
