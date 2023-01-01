@@ -60,10 +60,13 @@ int menu2()
 }
 
 // Permite o cadastro de um item (caso o produto ainda não exista) em uma lista de compas
-void insert()
+Item* insert(Item *raiz, Item *new)
 {
-     printf("inserindo");
-     return;
+     if (raiz == NULL) return new; 
+     if (strcmp(raiz->produto, new->produto) == 1) raiz->esquerdo = insert(raiz->esquerdo, new);
+     else raiz->direito = insert(raiz->direito, new);
+       
+     return raiz; 
 }
 
 // Permite consultar se um item está em uma lista de compras
@@ -71,11 +74,8 @@ int query(char name[50], Item* raiz)
 {
      if (raiz == NULL) return 0;
      if (strcmp(name, raiz->produto) == 0) return 1; 
-     
-     int esq = query(name, raiz->esquerdo);
-     int dir = query(name, raiz->direito);
-     
-     return (esq || dir);
+
+     return (query(name, raiz->esquerdo) || query(name, raiz->direito));
 }
 
 // Permite a atualização da quantidade de um produto (caso exista) na lista de compras
@@ -126,10 +126,10 @@ int main()
                          opcao2 = menu2();
                          switch(opcao2){ // operacoes sobre a arvore A
                               case 1 : 
-                                   insert();
+                                   // insert(raiz, new);
                                    break;
                               case 2 : 
-                                   query();
+                                   // query(name, raiz);
                                    break;
                               case 3 : 
                                    update();

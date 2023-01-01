@@ -15,10 +15,7 @@ int query(char name[50], Item* raiz)
     if (raiz == NULL) return 0;
     if (strcmp(name, raiz->produto) == 0) return 1; 
 
-    int esq = query(name, raiz->esquerdo);
-    int dir = query(name, raiz->direito);
-
-    return (esq || dir);
+    return (query(name, raiz->esquerdo) || query(name, raiz->direito));
 }
 
 void imprimePreOrdem(Item *raiz){
@@ -28,16 +25,16 @@ void imprimePreOrdem(Item *raiz){
     imprimePreOrdem(raiz->direito);    
 }
 
-Item* adicionaProduto(Item *raiz, Item *new)
+Item* insert(Item *raiz, Item *new)
 {
     if (raiz == NULL) return new; 
-    if (strcmp(raiz->produto, new->produto) == 1) raiz->esquerdo = adicionaProduto(raiz->esquerdo, new);
-    else raiz->direito = adicionaProduto(raiz->direito, new);
+    if (strcmp(raiz->produto, new->produto) == 1) raiz->esquerdo = insert(raiz->esquerdo, new);
+    else raiz->direito = insert(raiz->direito, new);
        
     return raiz; 
 }
 
-Item* criaProduto (char nome[50], int qtd)
+Item* create (char nome[50], int qtd)
 {
     Item* new = malloc(sizeof(Item));
     strcpy(new->produto, nome);
@@ -52,20 +49,20 @@ int main()
 {
     Item* raiz = NULL; 
 
-    Item* A = criaProduto("aproduto", 1);
-    Item* B = criaProduto("bproduto", 1);
-    Item* C = criaProduto("cproduto", 1);
-    Item* D = criaProduto("dproduto", 1);
-    Item* E = criaProduto("eproduto", 1);
+    Item* A = create("aproduto", 1);
+    Item* B = create("bproduto", 1);
+    Item* C = create("cproduto", 1);
+    Item* D = create("dproduto", 1);
+    Item* E = create("eproduto", 1);
 
 
-    raiz = adicionaProduto(raiz, D);
-    raiz = adicionaProduto(raiz, B);
-    raiz = adicionaProduto(raiz, E);
-    raiz = adicionaProduto(raiz, A);
-    raiz = adicionaProduto(raiz, C);
+    raiz = insert(raiz, D);
+    raiz = insert(raiz, B);
+    raiz = insert(raiz, E);
+    raiz = insert(raiz, A);
+    raiz = insert(raiz, C);
 
-    printf("\n\n%d\n\n", query("fproduto", raiz));
+    printf("\n\n%d\n\n", query("dproduto", raiz));
 
     // raiz = adicionaProduto(raiz, criaProduto("aproduto", 1));
     // raiz = adicionaProduto(raiz, criaProduto("bproduto", 1));
