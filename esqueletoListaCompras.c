@@ -11,6 +11,7 @@
 
 #include <stdio.h> 
 #include <stdlib.h> 
+#include <string.h> 
 
 #define EXIT 10  // valor fixo para a opção que finaliza a aplicação
 #define LIMPAR system("cls")
@@ -45,17 +46,17 @@ int menu1()
 int menu2()
 {
 	LIMPAR; 
-    int op = 0;
-    printf("Submenu - Gerenciar lista de compras\n");
+     int op = 0;
+     printf("Submenu - Gerenciar lista de compras\n");
 	printf("\n01- Inserir produto");
 	printf("\n02- Pesquisar produto");
 	printf("\n03- Atualizar produto");
 	printf("\n04- Listar produtos");
 	printf("\n05- Deletar produto");
-    printf("\n%d Retornar para o menu principal",EXIT);
-    printf("\nDigite a opcao: ");
-    scanf("%d",&op); 
-    return op;
+     printf("\n%d Retornar para o menu principal",EXIT);
+     printf("\nDigite a opcao: ");
+     scanf("%d",&op); 
+     return op;
 }
 
 // Permite o cadastro de um item (caso o produto ainda não exista) em uma lista de compas
@@ -66,10 +67,15 @@ void insert()
 }
 
 // Permite consultar se um item está em uma lista de compras
-void query()
+int query(char name[50], Item* raiz)
 {
-     printf("pesquisando");
-     return;
+     if (raiz == NULL) return 0;
+     if (strcmp(name, raiz->produto) == 0) return 1; 
+     
+     int esq = query(name, raiz->esquerdo);
+     int dir = query(name, raiz->direito);
+     
+     return (esq || dir);
 }
 
 // Permite a atualização da quantidade de um produto (caso exista) na lista de compras
