@@ -59,6 +59,16 @@ int menu2()
      return op;
 }
 
+Item* create(char nome[50], int qtd)
+{
+    Item* new = malloc(sizeof(Item));
+    strcpy(new->produto, nome);
+    new->quantidade = qtd; 
+    new->direito = NULL;
+    new->esquerdo = NULL;
+    return new; 
+}
+
 // Permite o cadastro de um item (caso o produto ainda não exista) em uma lista de compas
 Item* insert(Item *raiz, Item *new)
 {
@@ -70,26 +80,29 @@ Item* insert(Item *raiz, Item *new)
 }
 
 // Permite consultar se um item está em uma lista de compras
-int query(char name[50], Item* raiz)
+Item* query(char name[50], Item* raiz)
 {
-     if (raiz == NULL) return 0;
-     if (strcmp(name, raiz->produto) == 0) return 1; 
+    if (raiz == NULL) return NULL;
+    if (strcmp(name, raiz->produto) == 0) return raiz; 
 
-     return (query(name, raiz->esquerdo) || query(name, raiz->direito));
+    return (query(name, raiz->esquerdo) || query(name, raiz->direito));
 }
 
 // Permite a atualização da quantidade de um produto (caso exista) na lista de compras
-void update()
+int update(Item *raiz, char nome, int newQtd)
 {
-     printf("atualizando");
-     return;
+     Item* aux = query(nome, raiz);
+     if (aux == NULL) return 0; 
+     aux->quantidade = newQtd; 
 }
 
 // Listar todos os itens da lista de compras em ordem alfabética;
-void list()
+void list(Item* raiz)
 {
-     printf("listando");
-     return;
+     if (raiz == NULL) return; 
+     imprimePreOrdem(raiz->esquerdo);
+     printf("\t%s\t%d\n", raiz->produto);
+     imprimePreOrdem(raiz->direito);    
 }
 
 // Permite excluir um item de uma lista de compras
@@ -132,13 +145,13 @@ int main()
                                    // query(name, raiz);
                                    break;
                               case 3 : 
-                                   update();
+                                   // update();
                                    break;
                               case 4 : 
-                                   list();
+                                   // list();
                                    break;
                               case 5 : 
-                                   delete();
+                                   // delete();
                          }    
                     }
                     break;

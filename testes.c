@@ -10,13 +10,15 @@ struct item {
 };
 typedef struct item Item;
 
-int query(char name[50], Item* raiz)
+Item* query(char name[50], Item* raiz)
 {
-    if (raiz == NULL) return 0;
-    if (strcmp(name, raiz->produto) == 0) return 1; 
+    if (raiz == NULL) return NULL;
+    if (strcmp(name, raiz->produto) == 0) return raiz; 
 
     return (query(name, raiz->esquerdo) || query(name, raiz->direito));
 }
+
+
 
 void imprimePreOrdem(Item *raiz){
     if (raiz == NULL) return; 
@@ -41,8 +43,14 @@ Item* create (char nome[50], int qtd)
     new->quantidade = qtd; 
     new->direito = NULL;
     new->esquerdo = NULL;
-    // printf("%s %d", new->produto, new->quantidade); 
     return new; 
+}
+
+int update(Item *raiz, char nome, int newQtd)
+{
+    Item *aux = query(nome, raiz);
+    printf("\nQtd: %d", aux->quantidade);
+    return 1; 
 }
 
 int main() 
@@ -62,7 +70,10 @@ int main()
     raiz = insert(raiz, A);
     raiz = insert(raiz, C);
 
-    printf("\n\n%d\n\n", query("dproduto", raiz));
+    char nome[50] = "dproduto";
+
+    // printf("\n\n%d\n\n", (query(nome, raiz)->quantidade));
+    // printf("\n\n%d\n\n", (query(nome, raiz)->quantidade));
 
     // raiz = adicionaProduto(raiz, criaProduto("aproduto", 1));
     // raiz = adicionaProduto(raiz, criaProduto("bproduto", 1));
@@ -72,5 +83,15 @@ int main()
 
     imprimePreOrdem(raiz);
 
+    printf("update");
+    // int updat = update(raiz, nome, 5);
+    Item* aux = query(nome, raiz);
+
+
+    int upd = update(raiz, nome, 5);
+
+
+    imprimePreOrdem(raiz);
+    
     return 0;
 }
