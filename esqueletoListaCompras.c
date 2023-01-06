@@ -37,7 +37,7 @@ int menu1()
      printf("\t03 - Itens duplicados\n");
 
      printf("\t%d - Sair do programa\n",EXIT);
-     printf("\nDigite a opcao: ");
+     printf("\n\nDigite a opcao: ");
      scanf("%d",&op);
      return op;
 }
@@ -45,7 +45,6 @@ int menu1()
 // Apresenta o segundo menu da aplicação e retorna a opção selecionada
 int menu2()
 {
-	LIMPAR; 
      int op = 0;
      printf("Submenu - Gerenciar lista de compras\n");
 	printf("\n01- Inserir produto");
@@ -54,7 +53,7 @@ int menu2()
 	printf("\n04- Listar produtos");
 	printf("\n05- Deletar produto");
      printf("\n%d Retornar para o menu principal",EXIT);
-     printf("\nDigite a opcao: ");
+     printf("\n\nDigite a opcao: ");
      scanf("%d",&op); 
      return op;
 }
@@ -85,24 +84,27 @@ Item* query(char name[50], Item* raiz)
     if (raiz == NULL) return NULL;
     if (strcmp(name, raiz->produto) == 0) return raiz; 
 
-    return (query(name, raiz->esquerdo) || query(name, raiz->direito));
+     Item *esq = query(name, raiz->esquerdo);
+     if (esq != NULL) return esq; 
+     return query(name, raiz->direito);     
 }
 
 // Permite a atualização da quantidade de um produto (caso exista) na lista de compras
-int update(Item *raiz, char nome, int newQtd)
-{
-     Item* aux = query(nome, raiz);
-     if (aux == NULL) return 0; 
-     aux->quantidade = newQtd; 
-}
+// CONSERTAR 
+// int update(Item *raiz, char nome, int newQtd)
+// {
+//      Item* aux = query(nome, raiz);
+//      if (aux == NULL) return 0; 
+//      aux->quantidade = newQtd; 
+// }
 
 // Listar todos os itens da lista de compras em ordem alfabética;
 void list(Item* raiz)
 {
      if (raiz == NULL) return; 
-     imprimePreOrdem(raiz->esquerdo);
-     printf("\t%s\t%d\n", raiz->produto);
-     imprimePreOrdem(raiz->direito);    
+     list(raiz->esquerdo);
+     printf("\t%s\t%d\n", raiz->produto, raiz->quantidade);
+     list(raiz->direito);    
 }
 
 // Permite excluir um item de uma lista de compras
@@ -120,10 +122,26 @@ void intersect()
 // Programa principal
 int main()
 {
-    int opcao1;
-    int opcao2;
-    Item *raizA = NULL;
-    Item *raizB = NULL;
+     int opcao1;
+     int opcao2;
+     Item *raizA = NULL;
+     Item *raizB = NULL;
+
+     char nome[50]; 
+     int qtd; 
+     Item* aux; 
+
+     Item* A = create("aproduto", 1);
+     Item* B = create("bproduto", 1);
+     Item* C = create("cproduto", 1);
+     Item* D = create("dproduto", 1);
+     Item* E = create("eproduto", 1);
+
+     raizA = insert(raizA, D);
+     raizA = insert(raizA, B);
+     raizA = insert(raizA, E);
+     raizA = insert(raizA, A);
+     raizA = insert(raizA, C);
 
     opcao1 = 0;
     while (opcao1 != EXIT)
@@ -135,11 +153,29 @@ int main()
                case 1 : // gerenciar lista de compras A
                     opcao2 = 0;
                     while(opcao2 != EXIT){
-                         printf("\n\n** Lista de Compras A **\n\n");
+	                    LIMPAR; 
+                         printf("** Lista de Compras A **\n\n");
                          opcao2 = menu2();
                          switch(opcao2){ // operacoes sobre a arvore A
                               case 1 : 
+                                   // PERGUNTAR NOME
+                                   printf("Nome: ");
+                                   scanf("%s", nome); 
+                                   // CONFERIR SE EXISTE NA ARVORE 
+                                   if (query(nome, raizA) == NULL) {
+                                        // SE NÃO: INSERIR 
+                                        printf("\nQuantidade: ");
+                                        scanf("%d", &qtd);
+                                        insert(raizA, create(nome, qtd)); 
+                                        printf("\n\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
+                                        PAUSAR; 
+                                   } else {
+                                        printf("\nProduto já existe!\n\n");
+                                        PAUSAR; 
+                                   }
                                    // insert(raiz, new);
+                                   
+                                   // SE SIM
                                    break;
                               case 2 : 
                                    // query(name, raiz);
@@ -148,10 +184,15 @@ int main()
                                    // update();
                                    break;
                               case 4 : 
-                                   // list();
+                                   printf("\n\n** Lista de Produtos **\n"); 
+                                   printf("Nome\t\tQuantidade\n");
+                                   list(raizA);
+                                   printf("\n\n");
+                                   PAUSAR; 
                                    break;
                               case 5 : 
                                    // delete();
+                                   printf("..."); 
                          }    
                     }
                     break;

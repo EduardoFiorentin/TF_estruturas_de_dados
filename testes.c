@@ -14,8 +14,8 @@ Item* query(char name[50], Item* raiz)
 {
     if (raiz == NULL) return NULL;
     if (strcmp(name, raiz->produto) == 0) return raiz; 
-
     return (query(name, raiz->esquerdo) || query(name, raiz->direito));
+    // printf("query");
 }
 
 
@@ -86,9 +86,10 @@ int main()
     printf("update");
     // int updat = update(raiz, nome, 5);
     Item* aux = query(nome, raiz);
+    printf("%s %d", aux->produto, aux->quantidade);
 
-
-    int upd = update(raiz, nome, 5);
+    // int upd = update(raiz, nome, 5);
+    printf("\n");
 
 
     imprimePreOrdem(raiz);
