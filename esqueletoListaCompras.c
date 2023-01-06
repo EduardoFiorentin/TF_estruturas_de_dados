@@ -157,28 +157,26 @@ int main()
                          printf("** Lista de Compras A **\n\n");
                          opcao2 = menu2();
                          switch(opcao2){ // operacoes sobre a arvore A
+                              // CADASTRO DE PRODUTOS
                               case 1 : 
-                                   // PERGUNTAR NOME
                                    printf("Nome: ");
                                    scanf("%s", nome); 
-                                   // CONFERIR SE EXISTE NA ARVORE 
                                    if (query(nome, raizA) == NULL) {
-                                        // SE NÃO: INSERIR 
                                         printf("\nQuantidade: ");
                                         scanf("%d", &qtd);
                                         insert(raizA, create(nome, qtd)); 
                                         printf("\n\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
-                                        PAUSAR; 
-                                   } else {
-                                        printf("\nProduto já existe!\n\n");
-                                        PAUSAR; 
-                                   }
-                                   // insert(raiz, new);
-                                   
-                                   // SE SIM
+                                   } else printf("\nProduto ja existe!\n\n");
+                                   PAUSAR;
                                    break;
+
+                              // A
                               case 2 : 
-                                   // query(name, raiz);
+                                   printf("Nome: ");
+                                   scanf("%s", nome); 
+                                   if (query(nome, raizA) != NULL) printf("\nProduto cadastrado!\n\n");
+                                   else printf("\nProduto nao cadastrado!\n\n");
+                                   PAUSAR; 
                                    break;
                               case 3 : 
                                    // update();
