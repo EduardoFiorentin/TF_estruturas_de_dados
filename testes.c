@@ -15,9 +15,9 @@ Item* query(char name[50], Item* raiz)
     if (raiz == NULL) return NULL;
     if (strcmp(name, raiz->produto) == 0) return raiz; 
 
-     Item *esq = query(name, raiz->esquerdo);
-     if (esq != NULL) return esq; 
-     return query(name, raiz->direito);     
+    Item *esq = query(name, raiz->esquerdo);
+    if (esq != NULL) return esq; 
+    return query(name, raiz->direito);     
 }
 
 
@@ -50,6 +50,7 @@ Item* create (char nome[50], int qtd)
 
 int update(Item *raiz, char nome, int newQtd)
 {
+    printf("\nquery\n"); 
     Item *aux = query(nome, raiz);
     if (aux == NULL) return 0; 
     printf("\nQtd: %d", aux->quantidade);
@@ -89,7 +90,7 @@ int main()
     printf("update");
     // int updat = update(raiz, nome, 5);
     Item* aux = query(nome, raiz);
-    printf("%s %d", aux->produto, aux->quantidade);
+    printf("\n\nSSK: %s %d\n\n", aux->produto, aux->quantidade);
 
     int upd = update(raiz, nome, 5);
     printf("\n");
