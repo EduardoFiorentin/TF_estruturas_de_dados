@@ -91,24 +91,25 @@ Item* query(char name[50], Item* raiz)
 
 // Permite a atualização da quantidade de um produto (caso exista) na lista de compras
 // CONSERTAR 
-// int update(Item *raiz, char nome, int newQtd)
-// {
-//      Item* aux = query(nome, raiz);
-//      if (aux == NULL) return 0; 
-//      aux->quantidade = newQtd; 
-// }
+int update(Item *raiz, char nome, int newQtd)
+{
+     Item* aux = query(nome, raiz);
+     if (aux == NULL) return 0; 
+     aux->quantidade = newQtd; 
+     return 1; 
+}
 
 // Listar todos os itens da lista de compras em ordem alfabética;
 void list(Item* raiz)
 {
      if (raiz == NULL) return; 
      list(raiz->esquerdo);
-     printf("\t%s\t%d\n", raiz->produto, raiz->quantidade);
+     printf("%s\t\t%d\n", raiz->produto, raiz->quantidade);
      list(raiz->direito);    
 }
 
 // Permite excluir um item de uma lista de compras
-void delete()
+void delete(Item* raiz, char nome[50])
 {
      printf("deletando");
      return;
@@ -129,6 +130,7 @@ int main()
 
      char nome[50]; 
      int qtd; 
+     int opt; 
      Item* aux; 
 
      Item* A = create("aproduto", 1);
@@ -170,17 +172,34 @@ int main()
                                    PAUSAR;
                                    break;
 
-                              // A
+
+                              // VERIFICAR SE PRODUTO EXISTE
                               case 2 : 
                                    printf("Nome: ");
                                    scanf("%s", nome); 
-                                   if (query(nome, raizA) != NULL) printf("\nProduto cadastrado!\n\n");
-                                   else printf("\nProduto nao cadastrado!\n\n");
+                                   if (query(nome, raizA) == NULL) printf("\nProduto nao cadastrado!\n\n");
+                                   else printf("\nProduto cadastrado!\n\n");
                                    PAUSAR; 
                                    break;
+
+                              // ATUALIZAR PRODUTO 
                               case 3 : 
-                                   // update();
+                                   printf("Nome: ");
+                                   scanf("%s", nome); 
+                                   aux = query(nome, raizA);
+                                   if (aux == NULL){
+                                        printf("\nProduto nao cadastrado!\n\n");
+                                   }
+                                   else {
+                                        printf("\nNova quantidade: ");
+                                        scanf("%d", &qtd);
+                                        // update(raizA, nome, qtd);
+                                        printf("\nProduto atualizado!\n\n");
+                                   }
+                                   PAUSAR;
                                    break;
+                              
+                              // LISTAR PRODUTOS 
                               case 4 : 
                                    printf("\n\n** Lista de Produtos **\n"); 
                                    printf("Nome\t\tQuantidade\n");
@@ -188,9 +207,27 @@ int main()
                                    printf("\n\n");
                                    PAUSAR; 
                                    break;
+                              
+                              // DELETAR PRODUTO 
                               case 5 : 
-                                   // delete();
-                                   printf("..."); 
+                                   printf("Nome: ");
+                                   scanf("%s", nome); 
+                                   aux = query(nome, raizA);
+                                   if (aux == NULL){
+                                        printf("\nProduto nao cadastrado!\n\n");
+                                   }
+                                   else {
+                                        printf("\nProduto: %s\nQuantidade: %d\n\n", aux->produto, aux->quantidade);
+                                        printf("Deseja excluir o produto?\n[0] - Nao\n[1] - Sim\nOpcao: ");
+                                        scanf("%d", &opt); 
+                                        if (opt) {
+                                             // delete(raizA, nome);
+                                             printf("\nProduto deletado!\n\n");
+                                        } 
+                                        else printf("\nProduto não deletado!\n\n");
+                                   }
+                                   PAUSAR;
+                                   break;
                          }    
                     }
                     break;

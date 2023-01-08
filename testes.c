@@ -20,8 +20,6 @@ Item* query(char name[50], Item* raiz)
     return query(name, raiz->direito);     
 }
 
-
-
 void imprimePreOrdem(Item *raiz){
     if (raiz == NULL) return; 
     imprimePreOrdem(raiz->esquerdo);
@@ -37,6 +35,29 @@ Item* insert(Item *raiz, Item *new)
        
     return raiz; 
 }
+
+// Permite excluir um item de uma lista de compras
+void delete(Item* raiz, char nome[50])
+{
+    Item* aux = query(nome, raiz);
+
+    // nenhum filho 
+    if (aux->esquerdo == NULL && aux->direito == NULL) {
+        free(aux); 
+        return; 
+    }
+    
+    // dois filhos 
+    else if (aux->esquerdo != NULL && aux->direito != NULL) {
+        
+    }
+    
+    // um filho 
+    else {
+
+    }
+}
+
 
 Item* create (char nome[50], int qtd)
 {
