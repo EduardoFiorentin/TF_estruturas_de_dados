@@ -36,26 +36,34 @@ Item* insert(Item *raiz, Item *new)
     return raiz; 
 }
 
+Item* min(Item* raiz) {
+    if (raiz->esquerdo == NULL) return raiz;
+    return min(raiz->esquerdo); 
+}
+
 // Permite excluir um item de uma lista de compras
-void delete(Item* raiz, char nome[50])
+Item* delete(Item* raiz, char nome[50])
 {
-    Item* aux = query(nome, raiz);
+    if (raiz == NULL) return raiz; 
 
     // nenhum filho 
-    if (aux->esquerdo == NULL && aux->direito == NULL) {
-        free(aux); 
-        return; 
+    if (strcmp(nome, raiz->produto) == -1) {
+        raiz->esquerdo = delete(raiz->esquerdo, nome);
     }
-    
-    // dois filhos 
-    else if (aux->esquerdo != NULL && aux->direito != NULL) {
-        
-    }
-    
-    // um filho 
-    else {
+    else if (strcmp(nome, raiz->produto) == 1){
+        raiz->direito = delete(raiz->direito, nome); 
+    } else {
+        // Apenas um filho ou nenhum:
+        if (raiz->esquerdo == NULL) return raiz->direito;
+        if (raiz->direito == NULL) return raiz->esquerdo; 
 
+        // dois filhos 
+        Item* aux = min(raiz->direito); 
+        strcpy(raiz->produto, aux->produto); 
+        raiz->quantidade = aux->quantidade; 
+        raiz->direito = delete(raiz->direito, aux->produto); 
     }
+    return raiz; 
 }
 
 
@@ -69,14 +77,14 @@ Item* create (char nome[50], int qtd)
     return new; 
 }
 
-int update(Item *raiz, char nome, int newQtd)
-{
-    printf("\nquery\n"); 
-    Item *aux = query(nome, raiz);
-    if (aux == NULL) return 0; 
-    printf("\nQtd: %d", aux->quantidade);
-    return 1; 
-}
+// int update(Item *raiz, char nome, int newQtd)
+// {
+//     printf("\nquery\n"); 
+//     Item *aux = query(nome, raiz);
+//     if (aux == NULL) return 0; 
+//     printf("\nQtd: %d", aux->quantidade);
+//     return 1; 
+// }
 
 int main() 
 {
@@ -95,7 +103,6 @@ int main()
     raiz = insert(raiz, A);
     raiz = insert(raiz, C);
 
-    char nome[50] = "dproduto";
 
     // printf("\n\n%d\n\n", (query(nome, raiz)->quantidade));
     // printf("\n\n%d\n\n", (query(nome, raiz)->quantidade));
@@ -105,19 +112,25 @@ int main()
     // raiz = adicionaProduto(raiz, criaProduto("cproduto", 1));
     // raiz = adicionaProduto(raiz, criaProduto("dproduto", 1));
     // raiz = adicionaProduto(raiz, criaProduto("eproduto", 1));
+    char nome[50] = "aproduto";
 
     imprimePreOrdem(raiz);
 
-    printf("update");
+    // printf("update");
     // int updat = update(raiz, nome, 5);
-    Item* aux = query(nome, raiz);
-    printf("\n\nSSK: %s %d\n\n", aux->produto, aux->quantidade);
+    // Item* aux = query(nome, raiz);
+    // printf("\n\nSSK: %s %d\n\n", aux->produto, aux->quantidade);
 
-    int upd = update(raiz, nome, 5);
+    // int upd = update(raiz, nome, 5);
+    delete(raiz, nome);
     printf("\n");
 
 
     imprimePreOrdem(raiz);
+
+    // printf("\n%d\n", strcmp("A", "B")); 
+    // printf("%s", min(raiz)->produto); 
+    // strcmp("A", "B") : -1
     
     return 0;
 }

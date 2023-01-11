@@ -58,6 +58,11 @@ int menu2()
      return op;
 }
 
+Item* min(Item* raiz) {
+    if (raiz->esquerdo == NULL) return raiz;
+    return min(raiz->esquerdo); 
+}    
+
 Item* create(char nome[50], int qtd)
 {
     Item* new = malloc(sizeof(Item));
@@ -109,10 +114,28 @@ void list(Item* raiz)
 }
 
 // Permite excluir um item de uma lista de compras
-void delete(Item* raiz, char nome[50])
+Item* delete(Item* raiz, char nome[50])
 {
-     printf("deletando");
-     return;
+    if (raiz == NULL) return raiz; 
+
+    // nenhum filho 
+    if (strcmp(nome, raiz->produto) == -1) {
+        raiz->esquerdo = delete(raiz->esquerdo, nome);
+    }
+    else if (strcmp(nome, raiz->produto) == 1){
+        raiz->direito = delete(raiz->direito, nome); 
+    } else {
+        // Apenas um filho ou nenhum:
+        if (raiz->esquerdo == NULL) return raiz->direito;
+        if (raiz->direito == NULL) return raiz->esquerdo; 
+
+        // dois filhos 
+        Item* aux = min(raiz->direito); 
+        strcpy(raiz->produto, aux->produto); 
+        raiz->quantidade = aux->quantidade; 
+        raiz->direito = delete(raiz->direito, aux->produto); 
+    }
+    return raiz; 
 }
 
 void intersect()
@@ -182,7 +205,7 @@ int main()
                                    PAUSAR; 
                                    break;
 
-                              // ATUALIZAR PRODUTO 
+                              // ATUALIZAR PRODUTO X
                               case 3 : 
                                    printf("Nome: ");
                                    scanf("%s", nome); 
@@ -221,7 +244,7 @@ int main()
                                         printf("Deseja excluir o produto?\n[0] - Nao\n[1] - Sim\nOpcao: ");
                                         scanf("%d", &opt); 
                                         if (opt) {
-                                             // delete(raizA, nome);
+                                             delete(raizA, nome);
                                              printf("\nProduto deletado!\n\n");
                                         } 
                                         else printf("\nProduto não deletado!\n\n");
@@ -232,7 +255,7 @@ int main()
                     }
                     break;
                case 2 : // gerenciar lista de compras B
-                    // idem ao caso 1, mas para a arvore B
+                    // identico ao caso 1, mas para a arvore B
                case 3 : // Visualizar itens duplicados
                     intersect();
 
