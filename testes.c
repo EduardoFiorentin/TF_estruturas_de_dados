@@ -2,8 +2,10 @@
 #include <string.h> 
 #include <stdlib.h> 
 
+
+
 struct item {
-	char produto[50];
+	char nome[50];
 	int quantidade;
     struct item  *esquerdo; 
 	struct item  *direito;
@@ -13,7 +15,7 @@ typedef struct item Item;
 Item* query(char name[50], Item* raiz)
 {
     if (raiz == NULL) return NULL;
-    if (strcmp(name, raiz->produto) == 0) return raiz; 
+    if (strcmp(name, raiz->nome) == 0) return raiz; 
 
     Item *esq = query(name, raiz->esquerdo);
     if (esq != NULL) return esq; 
@@ -23,14 +25,14 @@ Item* query(char name[50], Item* raiz)
 void imprimePreOrdem(Item *raiz){
     if (raiz == NULL) return; 
     imprimePreOrdem(raiz->esquerdo);
-    printf("%s|", raiz->produto);
+    printf("%s|", raiz->nome);
     imprimePreOrdem(raiz->direito);    
 }
 
 Item* insert(Item *raiz, Item *new)
 {
     if (raiz == NULL) return new; 
-    if (strcmp(raiz->produto, new->produto) == 1) raiz->esquerdo = insert(raiz->esquerdo, new);
+    if (strcmp(raiz->nome, new->nome) == 1) raiz->esquerdo = insert(raiz->esquerdo, new);
     else raiz->direito = insert(raiz->direito, new);
        
     return raiz; 
@@ -47,10 +49,10 @@ Item* delete(Item* raiz, char nome[50])
     if (raiz == NULL) return raiz; 
 
     // nenhum filho 
-    if (strcmp(nome, raiz->produto) == -1) {
+    if (strcmp(nome, raiz->nome) == -1) {
         raiz->esquerdo = delete(raiz->esquerdo, nome);
     }
-    else if (strcmp(nome, raiz->produto) == 1){
+    else if (strcmp(nome, raiz->nome) == 1){
         raiz->direito = delete(raiz->direito, nome); 
     } else {
         // Apenas um filho ou nenhum:
@@ -59,9 +61,9 @@ Item* delete(Item* raiz, char nome[50])
 
         // dois filhos 
         Item* aux = min(raiz->direito); 
-        strcpy(raiz->produto, aux->produto); 
+        strcpy(raiz->nome, aux->nome); 
         raiz->quantidade = aux->quantidade; 
-        raiz->direito = delete(raiz->direito, aux->produto); 
+        raiz->direito = delete(raiz->direito, aux->nome); 
     }
     return raiz; 
 }
@@ -70,7 +72,7 @@ Item* delete(Item* raiz, char nome[50])
 Item* create (char nome[50], int qtd)
 {
     Item* new = malloc(sizeof(Item));
-    strcpy(new->produto, nome);
+    strcpy(new->nome, nome);
     new->quantidade = qtd; 
     new->direito = NULL;
     new->esquerdo = NULL;
