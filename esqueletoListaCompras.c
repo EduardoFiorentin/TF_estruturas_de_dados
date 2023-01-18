@@ -76,6 +76,7 @@ void push_back(Lista *lista, ItemList* new)
     }
 }
 
+// Printa a lista do inicio ao fim
 void print_list(Lista *lista) 
 {
     ItemList *aux_print; 
@@ -88,6 +89,7 @@ void print_list(Lista *lista)
 
 }
 
+// limpa a memoria usada na lista 
 void free_list(Lista *lista) {
     ItemList *aux = lista->primeiro; 
     ItemList *aux_clear; 
@@ -136,11 +138,13 @@ int menu2()
      return op;
 }
 
+// Enconta o menor item de uma BST
 Item* min(Item* raiz) {
     if (raiz->esquerdo == NULL) return raiz;
     return min(raiz->esquerdo); 
 }    
 
+// Cria os nodos da árvore 
 Item* create(char nome[50], int qtd)
 {
     Item* new = malloc(sizeof(Item));
@@ -213,6 +217,8 @@ Item* delete(Item* raiz, char nome[50])
     return raiz; 
 }
 
+// Faz a intersecção das duas arvores
+// coloca os nodos duplicados em uma lista encadeada simples
 void intersect(Item* raizA, Item* raizB, Lista* produtos)
 {
      if (raizA == NULL) return; 
@@ -234,17 +240,19 @@ int main()
      int opt; 
      Item* aux; 
 
-     Item* A = create("aproduto", 1);
-     Item* B = create("bproduto", 1);
-     Item* C = create("cproduto", 1);
-     Item* D = create("dproduto", 1);
-     Item* E = create("eproduto", 1);
+     // Cadastro de produtos padrão 
+
+     Item* A = create("abacate", 7);
+     Item* B = create("pera", 2);
+     Item* C = create("sal", 1);
+     Item* D = create("bolacha", 3);
+     Item* E = create("limao", 14);
      
-     Item* F = create("fproduto", 1);
-     Item* G = create("gproduto", 1);
-     Item* H = create("hproduto", 1);
-     Item* I = create("iproduto", 1);
-     Item* J = create("jproduto", 1);
+     Item* F = create("caderno", 1);
+     Item* G = create("lapis", 3);
+     Item* H = create("sal", 1);
+     Item* I = create("bolacha", 3);
+     Item* J = create("laranja", 15);
 
      raizA = insert(raizA, D);
      raizA = insert(raizA, B);
@@ -278,10 +286,10 @@ int main()
                                    scanf("%s", nome); 
                                    aux = query(nome, raizA);
                                    if (aux == NULL) {
-                                        printf("\nQuantidade: ");
+                                        printf("Quantidade: ");
                                         scanf("%d", &qtd);
                                         insert(raizA, create(nome, qtd)); 
-                                        printf("\n\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
+                                        printf("\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
                                    }
                                    else 
                                    {
@@ -355,6 +363,8 @@ int main()
                          }    
                     }
                     break;
+
+
                case 2 : // gerenciar lista de compras B
                     opcao2 = 0;
                     while(opcao2 != EXIT){
@@ -369,10 +379,10 @@ int main()
                                    scanf("%s", nome); 
                                    aux = query(nome, raizB);
                                    if (aux == NULL) {
-                                        printf("\nQuantidade: ");
+                                        printf("Quantidade: ");
                                         scanf("%d", &qtd);
                                         insert(raizB, create(nome, qtd)); 
-                                        printf("\n\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
+                                        printf("\nProduto Cadastrado!\n\tNome: %s\n\tQtd: %d\n\n", nome, qtd); 
                                    }
                                    else 
                                    {
@@ -446,6 +456,8 @@ int main()
                          }    
                     }
                     break;
+
+
                case 3 : // Visualizar itens duplicados
                     LIMPAR;
                     printf("** Interseccao das listas A e B **\n\n"); 
@@ -458,6 +470,8 @@ int main()
 
                     if (produtos->primeiro != NULL) print_list(produtos);
                     else printf("Nao ha itens iguais nas listas!\n\n\n");      
+                    
+                    free_list(produtos); 
 
                     PAUSAR; 
 
