@@ -80,12 +80,11 @@ void print_list(Lista *lista)
 {
     ItemList *aux_print; 
 
-    printf("\nLista de frente pra tras:\n");
     for (aux_print = lista->primeiro; aux_print != NULL; aux_print = aux_print->proximo) 
     {
-        printf("Nome: %s, Quantidade: %d\n", aux_print->node->nome, aux_print->node->quantidade);
+        printf("Nome: %s\n", aux_print->node->nome);
     }
-    printf("\n");
+    printf("\n\n");
 
 }
 
@@ -449,16 +448,16 @@ int main()
                     break;
                case 3 : // Visualizar itens duplicados
                     LIMPAR;
-                    printf("** Interseccao das listas A e B **"); 
+                    printf("** Interseccao das listas A e B **\n\n"); 
 
-                    Lista *produtos; 
+                    Lista *produtos = malloc(sizeof(Lista)); 
                     produtos->primeiro = NULL; 
                     produtos->ultimo = NULL; 
 
                     intersect(raizA, raizB, produtos);
 
                     if (produtos->primeiro != NULL) print_list(produtos);
-                    else printf("\nNao ha itens iguais nas listas!\n\n"); 
+                    else printf("Nao ha itens iguais nas listas!\n\n\n");      
 
                     PAUSAR; 
 
