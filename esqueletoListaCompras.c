@@ -243,27 +243,27 @@ int main()
      // Cadastro de produtos padrão 
 
      Item* A = create("abacate", 7);
-     Item* B = create("pera", 2);
-     Item* C = create("sal", 1);
-     Item* D = create("bolacha", 3);
-     Item* E = create("limao", 14);
+     // Item* B = create("pera", 2);
+     // Item* C = create("sal", 1);
+     // Item* D = create("bolacha", 3);
+     // Item* E = create("limao", 14);
      
      Item* F = create("caderno", 1);
-     Item* G = create("lapis", 3);
-     Item* H = create("sal", 1);
-     Item* I = create("bolacha", 3);
-     Item* J = create("laranja", 15);
+     // Item* G = create("lapis", 3);
+     // Item* H = create("sal", 1);
+     // Item* I = create("bolacha", 3);
+     // Item* J = create("laranja", 15);
 
-     raizA = insert(raizA, D);
-     raizA = insert(raizA, B);
-     raizA = insert(raizA, E);
+     // raizA = insert(raizA, D);
+     // raizA = insert(raizA, B);
+     // raizA = insert(raizA, E);
      raizA = insert(raizA, A);
-     raizA = insert(raizA, C);
+     // raizA = insert(raizA, C);
      
-     raizB = insert(raizB, H);
-     raizB = insert(raizB, G);
-     raizB = insert(raizB, J);
-     raizB = insert(raizB, I);
+     // raizB = insert(raizB, H);
+     // raizB = insert(raizB, G);
+     // raizB = insert(raizB, J);
+     // raizB = insert(raizB, I);
      raizB = insert(raizB, F);
 
     opcao1 = 0;

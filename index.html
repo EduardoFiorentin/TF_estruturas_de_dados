@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #carousel {
+        width: 800px;
+        height: 600px;
+        position: relative;
+        overflow: hidden;
+        }
+
+        .slide {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+        opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="carousel">
+        <div class="slide">
+          <img src="#" alt="Image 1">
+        </div>
+        <div class="slide">
+          <img src="#" alt="Image 2">
+        </div>
+        <div class="slide">
+          <img src="#" alt="Image 3">
+        </div>
+      </div>
+
+    <script>
+        var carousel = document.getElementById("carousel");
+        var slides = carousel.query     
+    </script>
+</body>
+</html>
